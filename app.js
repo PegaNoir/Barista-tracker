@@ -618,4 +618,5 @@ const BaristaTrackerPWA = () => {
                       <div className="flex items-center justify-between">
                         <div className="text-sm">
                           <span className="text-gray-600">Ratio: </span>
-                          <span className="font-semibold text-amber-600">1:{shot.brew
+                          <span className="font-semibold text-amber-600">1:{shot.brewRatio}</span>
+                        </div>
