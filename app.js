@@ -620,3 +620,106 @@ const BaristaTrackerPWA = () => {
                           <span className="text-gray-600">Ratio: </span>
                           <span className="font-semibold text-amber-600">1:{shot.brewRatio}</span>
                         </div>
+{shot.tags && shot.tags.length > 0 && (
+                          <div className="flex gap-1">
+                            {shot.tags.map(tag => (
+                              <span key={tag} className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {shot.notes && (
+                        <div className="mt-3 pt-3 border-t border-gray-200 text-sm text-gray-600">
+                          {shot.notes}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
+
+          {activeTab === 'beans' && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-gray-800">My Beans</h2>
+                <button
+                  onClick={() => setShowBeanModal(true)}
+                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add Bean
+                </button>
+              </div>
+
+              {beans.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <p>No beans added yet</p>
+                </div>
+              ) : (
+                beans.map(bean => (
+                  <div key={bean.id} className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                    <div className="font-semibold text-gray-800">{bean.name}</div>
+                    <div className="text-sm text-gray-600">{bean.roaster}</div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+
+        {showBeanModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-gray-800">Add New Bean</h3>
+                <button onClick={() => setShowBeanModal(false)} className="text-gray-500 hover:text-gray-700">
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Bean Name</label>
+                  <input
+                    type="text"
+                    value={currentBean.name}
+                    onChange={(e) => setCurrentBean({ ...currentBean, name: e.target.value })}
+                    className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
+                    placeholder="e.g., Ethiopia Yirgacheffe"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Roaster</label>
+                  <input
+                    type="text"
+                    value={currentBean.roaster}
+                    onChange={(e) => setCurrentBean({ ...currentBean, roaster: e.target.value })}
+                    className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
+                    placeholder="e.g., Local Coffee Co."
+                  />
+                </div>
+
+                <button
+                  onClick={saveBean}
+                  className="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-700 transition"
+                >
+                  Save Bean
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Render the app
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<BaristaTrackerPWA />);
